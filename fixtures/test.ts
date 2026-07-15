@@ -1,7 +1,7 @@
 import { test as base } from '@playwright/test';
 import { locales, Locale } from '../config/locales';
 
-type TestOptions = {
+export type TestOptions = {
     siteLocale: Locale;
 };
 

@@ -1,6 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
+import type { TestOptions } from './fixtures/test';
+import { STORAGE_STATE_PATH } from './tests/setup/storageState';
 
-export default defineConfig({
+export default defineConfig<TestOptions>({
     testDir: './tests',
     fullyParallel: true,
     forbidOnly: !!process.env.CI,
@@ -15,16 +17,38 @@ export default defineConfig({
     },
     projects: [
         {
-            name: 'chromium',
-            use: { ...devices['Desktop Chrome'] },
+            name: 'setup',
+            testMatch: /consent\.setup\.ts/,
         },
         {
-            name: 'firefox',
-            use: { ...devices['Desktop Firefox'] },
+            name: 'chromium-de',
+            use: { ...devices['Desktop Chrome'], siteLocale: 'de', storageState: STORAGE_STATE_PATH },
+            dependencies: ['setup'],
         },
         {
-            name: 'webkit',
-            use: { ...devices['Desktop Safari'] },
+            name: 'chromium-en',
+            use: { ...devices['Desktop Chrome'], siteLocale: 'en', storageState: STORAGE_STATE_PATH },
+            dependencies: ['setup'],
+        },
+        {
+            name: 'firefox-de',
+            use: { ...devices['Desktop Firefox'], siteLocale: 'de', storageState: STORAGE_STATE_PATH },
+            dependencies: ['setup'],
+        },
+        {
+            name: 'firefox-en',
+            use: { ...devices['Desktop Firefox'], siteLocale: 'en', storageState: STORAGE_STATE_PATH },
+            dependencies: ['setup'],
+        },
+        {
+            name: 'webkit-de',
+            use: { ...devices['Desktop Safari'], siteLocale: 'de', storageState: STORAGE_STATE_PATH },
+            dependencies: ['setup'],
+        },
+        {
+            name: 'webkit-en',
+            use: { ...devices['Desktop Safari'], siteLocale: 'en', storageState: STORAGE_STATE_PATH },
+            dependencies: ['setup'],
         },
     ],
 });
