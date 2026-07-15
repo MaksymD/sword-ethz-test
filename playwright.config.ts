@@ -3,6 +3,7 @@ import type { TestOptions } from './fixtures/test';
 import { STORAGE_STATE_PATH } from './tests/setup/storageState';
 
 export default defineConfig<TestOptions>({
+    captureGitInfo: { commit: true },
     testDir: './tests',
     fullyParallel: true,
     forbidOnly: !!process.env.CI,
