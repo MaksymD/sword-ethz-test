@@ -10,6 +10,7 @@ export default defineConfig<TestOptions>({
     reporter: [
         ['html', { open: 'never' }],
         ['list'],
+        ['allure-playwright'],
     ],
     use: {
         trace: 'on-first-retry',
