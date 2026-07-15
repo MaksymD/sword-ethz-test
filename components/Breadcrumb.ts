@@ -7,6 +7,8 @@ export class Breadcrumb {
     constructor(page: Page) {
         this.items = page.getByRole('navigation', { name: 'Breadcrumb' }).locator('li a');
     }
+
+    /** Asserts the full breadcrumb path matches the expected sequence of labels. */
     async expectPath(expected: readonly string[]): Promise<void> {
         await expect(this.items).toHaveText([...expected]);
     }
