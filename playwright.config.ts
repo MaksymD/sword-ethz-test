@@ -13,12 +13,13 @@ export default defineConfig<TestOptions>({
     ],
     use: {
         trace: 'on-first-retry',
+        headless: true,
         screenshot: 'only-on-failure',
     },
     projects: [
         {
             name: 'setup',
-            testMatch: /consent\.setup\.ts/,
+            testMatch: `consent.setup.ts`,
         },
         {
             name: 'chromium-de',
