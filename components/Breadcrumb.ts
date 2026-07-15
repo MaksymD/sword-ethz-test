@@ -1,4 +1,4 @@
-import { Locator, Page, expect } from '@playwright/test';
+import { Locator, Page, expect, test } from '@playwright/test';
 
 /** Breadcrumb nav — aria-label stays "Breadcrumb" in both DE and EN. */
 export class Breadcrumb {
@@ -10,6 +10,8 @@ export class Breadcrumb {
 
     /** Asserts the full breadcrumb path matches the expected sequence of labels. */
     async expectPath(expected: readonly string[]): Promise<void> {
-        await expect(this.items).toHaveText([...expected]);
+        await test.step('Verify breadcrumb', async () => {
+            await expect(this.items).toHaveText([...expected]);
+        });
     }
 }

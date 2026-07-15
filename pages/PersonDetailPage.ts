@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator, expect, test } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { Breadcrumb } from '../components/Breadcrumb';
 
@@ -15,12 +15,16 @@ export class PersonDetailPage extends BasePage {
 
     /** Asserts the visible email matches the expected value. */
     async expectEmail(prefix: string, email: string): Promise<void> {
-        await expect(this.container).toContainText(this.flexibleWhitespace(`${prefix} ${email}`));
+        await test.step('Verify email', async () => {
+            await expect(this.container).toContainText(this.flexibleWhitespace(`${prefix} ${email}`));
+        });
     }
 
     /** Asserts the visible phone number matches the expected value. */
     async expectPhone(prefix: string, phone: string): Promise<void> {
-        await expect(this.container).toContainText(this.flexibleWhitespace(`${prefix} ${phone}`));
+        await test.step('Verify phone', async () => {
+            await expect(this.container).toContainText(this.flexibleWhitespace(`${prefix} ${phone}`));
+        });
     }
 
     /** Builds a regex that matches regardless of regular space vs &nbsp; in the source markup. */
