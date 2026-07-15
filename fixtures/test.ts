@@ -9,6 +9,12 @@ export type TestOptions = {
 export const test = base.extend<TestOptions>({
     siteLocale: ['de', { option: true }],
     page: async ({ page, siteLocale }, use) => {
+        await page.addLocatorHandler(
+            page.getByRole('button', { name: locales[siteLocale].cookieRejectButtonLabel }),
+            async (locator) => {
+                await locator.click();
+            },
+        );
         await page.goto(locales[siteLocale].entryUrl, { waitUntil: 'domcontentloaded' });
         await use(page);
     },

@@ -1,10 +1,13 @@
 import {test} from '../fixtures/test';
+import * as allure from 'allure-js-commons';
 import {locales} from '../config/locales';
 import {departementsstab, people} from '../testdata/people';
 import {EthzHomePage} from '../pages/EthzHomePage';
 
 test.describe('Testfall: Kontakt-Details', () => {
-    test('shows correct contact details for Paulina Motyka', async ({page, siteLocale}) => {
+    test('shows correct contact details for Paulina Motyka', async ({page, siteLocale}, testInfo) => {
+        await allure.parameter('locale', siteLocale);
+        await allure.parameter('project', testInfo.project.name);
         const locale = locales[siteLocale];
 
         const departmentHome = await test.step('Select D-INFK department', async () => {
@@ -12,7 +15,6 @@ test.describe('Testfall: Kontakt-Details', () => {
             return homePage.selectDepartement(
                 locale.departementSelectLabel,
                 locale.departementOptionValue,
-                locale.cookieRejectButtonLabel,
             );
         });
 
@@ -29,10 +31,13 @@ test.describe('Testfall: Kontakt-Details', () => {
             return departementsstabPage.openPersonDetail(people.paulinaMotyka.fullName, locale.mehrDetailsLabel);
         });
 
-        await test.step('Verify email, phone and breadcrumb', async () => {
+        await test.step('Verify breadcrumb', async () => {
+            await personDetailPage.breadcrumb.expectPath(locale.breadcrumbs.personDetail);
+        });
+
+        await test.step('Verify contact details', async () => {
             await personDetailPage.expectEmail(locale.emailLabelPrefix, people.paulinaMotyka.email);
             await personDetailPage.expectPhone(locale.phoneLabelPrefix, people.paulinaMotyka.phone);
-            await personDetailPage.breadcrumb.expectPath(locale.breadcrumbs.personDetail);
         });
     });
 });
