@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { PersonCard } from '../components/PersonCard';
@@ -13,9 +13,9 @@ export class DepartementsstabPage extends BasePage {
         this.breadcrumb = new Breadcrumb(page);
     }
 
-    /** Counts staff cards */
-    async getStaffCount(): Promise<number> {
-        return PersonCard.locateAll(this.page).count();
+    /** Asserts the number of staff cards currently shown on the page. */
+    async expectStaffCount(expected: number): Promise<void> {
+        await expect(PersonCard.locateAll(this.page)).toHaveCount(expected);
     }
 
     /** Finds the card by name and clicks through to its detail page. */
