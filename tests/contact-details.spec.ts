@@ -15,6 +15,7 @@ test.describe('Testfall: Kontakt-Details', () => {
             return homePage.selectDepartement(
                 locale.departementSelectLabel,
                 locale.departementOptionValue,
+                locale.cookieRejectButtonLabel,
             );
         });
 
